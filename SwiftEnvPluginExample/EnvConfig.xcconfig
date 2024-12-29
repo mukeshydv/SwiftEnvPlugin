@@ -1,0 +1,12 @@
+//
+//  EnvConfig.xcconfig
+//  SwiftEnvPluginExample
+//
+//  Created by Mukesh Yadav on 30/12/24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+// Do not commit this file to source control
+NESTED_ENV_VARIABLE = Enter any value
