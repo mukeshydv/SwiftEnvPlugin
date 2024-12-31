@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "SwiftEnvPlugin",
     platforms: [
-        .macOS(.v12), .iOS(.v13), .watchOS(.v8), .tvOS(.v15)
+        .macOS(.v10_13), .iOS(.v12), .watchOS(.v4), .tvOS(.v12)
     ],
     products: [
         // Products can be used to vend plugins, making them visible to other packages.
@@ -17,16 +17,11 @@ let package = Package(
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
-//        .plugin(
-//            name: "SwiftEnvPlugin",
-//            capability: .buildTool(),
-//            dependencies: ["SwiftEnvGenerator"]
-//        ),
-                .plugin(
-                    name: "SwiftEnvPlugin",
-                    capability: .buildTool(),
-                    dependencies: ["SwiftEnvGenerator"]
-                ),
+        .plugin(
+            name: "SwiftEnvPlugin",
+            capability: .buildTool(),
+            dependencies: ["SwiftEnvGenerator"]
+        ),
         .executableTarget(name: "SwiftEnvGenerator")
     ]
 )
