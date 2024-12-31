@@ -9,6 +9,7 @@ SwiftEnvPlugin is a Swift Package Manager (SPM) build tool plugin designed to ge
 - Automatically generates a Swift file containing constants for environment variables. ✨
 - Simplifies managing environment-specific values in Swift projects. ✨
 - Fully integrates with Swift Package Manager's plugin system. ✨
+- Customizable file and enum names, as well as access modifiers, via an xcconfig file. ✨
 
 ---
 
@@ -55,6 +56,22 @@ In this example:
 - `apiKey` will be set to the value of the `MY_API_KEY` environment variable. ✨
 - `baseUrl` will be set to the value of the `MY_BASE_URL` environment variable. ✨
 
+### Customize Using an xcconfig File
+
+You can optionally provide an `swiftenv.xcconfig` file to customize the generated file and enum names, as well as the access modifier. 🌟🌟🌟
+
+#### Example `swiftenv.xcconfig` File
+
+```plaintext
+MAPPER_FILE_NAME = swiftenvinput.json
+OUTPUT_ENUM_NAME = EnvironmentVar
+ACCESS_MODIFIER = internal
+```
+
+- `MAPPER_FILE_NAME`: Specifies the input JSON file name. ✨
+- `OUTPUT_ENUM_NAME`: Defines the name of the generated enum. ✨
+- `ACCESS_MODIFIER`: Sets the access level (`public`, `internal`, etc.) of the generated constants. ✨
+
 ---
 
 ## Usage 🌟🌟🌟
@@ -63,9 +80,9 @@ In this example:
 
 When you build your project using `swift build` or Xcode, the plugin will: 🌟🌟🌟
 
-1. Read the `swiftenv.json` file.
+1. Read the `swiftenv.json` file (or the file specified in the `.xcconfig` file).
 2. Fetch the values of the specified environment variables.
-3. Generate a `SwiftEnv.swift` file in the build directory.
+3. Generate a `SwiftEnv.swift` file in the build directory with the specified enum name and access modifier.
 4. Include the generated file in your build process.
 
 ### Access Generated Constants
@@ -96,9 +113,9 @@ enum SwiftEnv {
 
 ### How It Works
 
-1. The plugin reads the `swiftenv.json` file to determine the mapping of Swift variable names to environment variable names. ✨
+1. The plugin reads the `swiftenv.json` file (or the specified `MAPPER_FILE_NAME` in the `swiftenv.xcconfig` file) to determine the mapping of Swift variable names to environment variable names. ✨
 2. It fetches the environment variable values during the build process. ✨
-3. It generates a `SwiftEnv.swift` file in a predefined directory. ✨
+3. It generates a `SwiftEnv.swift` file (or the file with a name and enum specified in the `swiftenv.xcconfig` file) in a predefined directory. ✨
 
 ### Contributing
 
@@ -125,17 +142,6 @@ This project is licensed under the MIT License. See the [LICENSE](./LICENSE) fil
 
 ---
 
-## Acknowledgments 🌟🌟🌟
-
-Special thanks to the Swift community for their guidance and support in developing this plugin. 🌟🌟🌟
-
----
-
 ## Contact 🌟🌟🌟
 
 For questions or suggestions, please open an issue on GitHub or contact [Mukesh Yadav](https://github.com/mukeshydv). 🌟🌟🌟
-
----
-
-Happy coding! 🚀🌟🌟🌟
-
