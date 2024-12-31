@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8B41F9C52D21CA7700A81A61 /* swiftenv.json in Resources */ = {isa = PBXBuildFile; fileRef = 8B41F9C42D21CA7700A81A61 /* swiftenv.json */; };
+		8B41F9C52D21CA7700A81A61 /* swiftenvinput.json in Resources */ = {isa = PBXBuildFile; fileRef = 8B41F9C42D21CA7700A81A61 /* swiftenvinput.json */; };
 		8B41F9D82D21D0C800A81A61 /* EnvConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8B41F9D72D21D0C800A81A61 /* EnvConfig.xcconfig */; };
+		8B41FA002D23D2FA00A81A61 /* swiftenv.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8B41F9FF2D23D2FA00A81A61 /* swiftenv.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8B41F9C42D21CA7700A81A61 /* swiftenv.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = swiftenv.json; sourceTree = "<group>"; };
+		8B41F9C42D21CA7700A81A61 /* swiftenvinput.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = swiftenvinput.json; sourceTree = "<group>"; };
 		8B41F9D72D21D0C800A81A61 /* EnvConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = EnvConfig.xcconfig; sourceTree = "<group>"; };
+		8B41F9FF2D23D2FA00A81A61 /* swiftenv.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = swiftenv.xcconfig; sourceTree = "<group>"; };
 		8BF0B8642D21C919000D9907 /* SwiftEnvPluginExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftEnvPluginExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -39,8 +41,9 @@
 		8BF0B85B2D21C919000D9907 = {
 			isa = PBXGroup;
 			children = (
+				8B41F9FF2D23D2FA00A81A61 /* swiftenv.xcconfig */,
 				8B41F9D72D21D0C800A81A61 /* EnvConfig.xcconfig */,
-				8B41F9C42D21CA7700A81A61 /* swiftenv.json */,
+				8B41F9C42D21CA7700A81A61 /* swiftenvinput.json */,
 				8BF0B8662D21C919000D9907 /* SwiftEnvPluginExample */,
 				8BF0B8652D21C919000D9907 /* Products */,
 			);
@@ -123,7 +126,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B41F9D82D21D0C800A81A61 /* EnvConfig.xcconfig in Resources */,
-				8B41F9C52D21CA7700A81A61 /* swiftenv.json in Resources */,
+				8B41FA002D23D2FA00A81A61 /* swiftenv.xcconfig in Resources */,
+				8B41F9C52D21CA7700A81A61 /* swiftenvinput.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

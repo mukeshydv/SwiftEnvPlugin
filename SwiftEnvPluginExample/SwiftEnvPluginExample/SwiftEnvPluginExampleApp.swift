@@ -11,7 +11,9 @@ import SwiftUI
 struct SwiftEnvPluginExampleApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(value: SwiftEnv.config + " " + SwiftEnv.objectKey)
+            ContentView(
+                value: EnvironmentVar.config + " " + EnvironmentVar.objectNewKey
+            )
         }
     }
 }

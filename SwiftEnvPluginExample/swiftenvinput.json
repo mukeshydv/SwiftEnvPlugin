@@ -1,6 +1,6 @@
 {
     "config": "CONFIG",
     "object": {
-        "key": "NESTED_ENV_VARIABLE"
+        "newKey": "NESTED_ENV_VARIABLE"
     }
 }

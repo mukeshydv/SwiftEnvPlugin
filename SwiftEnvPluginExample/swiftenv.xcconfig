@@ -1,0 +1,13 @@
+//
+//  swiftenv.xcconfig
+//  SwiftEnvPluginExample
+//
+//  Created by Mukesh Yadav on 31/12/24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+MAPPER_FILE_NAME = swiftenvinput.json
+OUTPUT_ENUM_NAME = EnvironmentVar
+ACCESS_MODIFIER = internal
