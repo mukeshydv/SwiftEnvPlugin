@@ -71,7 +71,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				8B41F9C12D21C99000A81A61 /* PBXTargetDependency */,
+				8B6E921E2D240CAA00D4F42E /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				8BF0B8662D21C919000D9907 /* SwiftEnvPluginExample */,
@@ -108,7 +108,7 @@
 			mainGroup = 8BF0B85B2D21C919000D9907;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				8B41F9BF2D21C98000A81A61 /* XCLocalSwiftPackageReference "../../SwiftEnvPlugin" */,
+				8B6E92122D240C7900D4F42E /* XCLocalSwiftPackageReference "../../SwiftEnvPlugin" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8BF0B8652D21C919000D9907 /* Products */;
@@ -144,9 +144,9 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		8B41F9C12D21C99000A81A61 /* PBXTargetDependency */ = {
+		8B6E921E2D240CAA00D4F42E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = 8B41F9C02D21C99000A81A61 /* SwiftEnvPlugin */;
+			productRef = 8B6E921D2D240CAA00D4F42E /* SwiftEnvPlugin */;
 		};
 /* End PBXTargetDependency section */
 
@@ -366,16 +366,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		8B41F9BF2D21C98000A81A61 /* XCLocalSwiftPackageReference "../../SwiftEnvPlugin" */ = {
+		8B6E92122D240C7900D4F42E /* XCLocalSwiftPackageReference "../../SwiftEnvPlugin" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../../SwiftEnvPlugin;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		8B41F9C02D21C99000A81A61 /* SwiftEnvPlugin */ = {
+		8B6E921D2D240CAA00D4F42E /* SwiftEnvPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8B41F9BF2D21C98000A81A61 /* XCLocalSwiftPackageReference "../../SwiftEnvPlugin" */;
+			package = 8B6E92122D240C7900D4F42E /* XCLocalSwiftPackageReference "../../SwiftEnvPlugin" */;
 			productName = "plugin:SwiftEnvPlugin";
 		};
 /* End XCSwiftPackageProductDependency section */

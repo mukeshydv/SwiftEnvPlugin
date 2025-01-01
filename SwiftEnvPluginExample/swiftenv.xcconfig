@@ -11,3 +11,4 @@
 MAPPER_FILE_NAME = swiftenvinput.json
 OUTPUT_ENUM_NAME = EnvironmentVar
 ACCESS_MODIFIER = internal
+OUTPUT_FILE_PATH = SwiftEnvPluginExample

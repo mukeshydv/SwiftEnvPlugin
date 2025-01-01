@@ -10,9 +10,8 @@ let package = Package(
     ],
     products: [
         // Products can be used to vend plugins, making them visible to other packages.
-        .plugin(
-            name: "SwiftEnvPlugin",
-            targets: ["SwiftEnvPlugin"])
+        .plugin(name: "SwiftEnvPlugin", targets: ["SwiftEnvPlugin"]),
+        .plugin(name: "SwiftEnv-Generate", targets: ["SwiftEnv-Generate"])
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -20,6 +19,19 @@ let package = Package(
         .plugin(
             name: "SwiftEnvPlugin",
             capability: .buildTool(),
+            dependencies: ["SwiftEnvGenerator"]
+        ),
+        .plugin(
+            name: "SwiftEnv-Generate",
+            capability: .command(
+                intent: .custom(
+                    verb: "swiftenv-generate",
+                    description: "Generate SwiftEnv configuration from environment variables"
+                ),
+                permissions: [
+                    .writeToPackageDirectory(reason: "This command generates source code")
+                ]
+            ),
             dependencies: ["SwiftEnvGenerator"]
         ),
         .executableTarget(name: "SwiftEnvGenerator")
