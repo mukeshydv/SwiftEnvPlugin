@@ -6,16 +6,16 @@ struct SwiftEnvPlugin: BuildToolPlugin {
     /// Entry point for creating build commands for targets in Swift packages.
     func createBuildCommands(context: PluginContext, target: Target) async throws -> [Command] {
         // This plugin only runs for package targets that can have source files.
-        guard let sourceFiles = target.sourceModule?.sourceFiles else { return [] }
+        guard let sourceFiles = (target as? SourceModuleTarget)?.sourceFiles else { return [] }
         
         // Find the code generator tool to run (replace this with the actual one).
         let generatorTool = try context.tool(named: "SwiftEnvGenerator")
         
         // Construct a build command for each source file with a particular suffix.
         return try generateCode(
-            inputFiles: sourceFiles.map(\.url),
-            outputDirectory: context.pluginWorkDirectoryURL,
-            executablePath: generatorTool.url
+            inputFiles: sourceFiles.map(\.path),
+            outputDirectory: context.pluginWorkDirectory,
+            executablePath: generatorTool.path
         )
     }
 }
@@ -31,22 +31,22 @@ extension SwiftEnvPlugin: XcodeBuildToolPlugin {
 
         // Construct a build command for each source file with a particular suffix.
         return try generateCode(
-            inputFiles: target.inputFiles.map(\.url),
-            outputDirectory: context.pluginWorkDirectoryURL,
-            executablePath: generatorTool.url
+            inputFiles: target.inputFiles.map(\.path),
+            outputDirectory: context.pluginWorkDirectory,
+            executablePath: generatorTool.path
         )
     }
 }
 
 #endif
-fileprivate func generateCode(inputFiles: [URL], outputDirectory: URL, executablePath: URL) throws -> [Command] {
+fileprivate func generateCode(inputFiles: [Path], outputDirectory: Path, executablePath: Path) throws -> [Command] {
     // Find the swiftenv.json file in the input files.
     var mapperFileName = "swiftenv.json"
     var outputEnumName = "SwiftEnv"
     var defaultAccessModifier = "public"
     
     if let configFile = inputFiles.first(
-        where: { $0.lastPathComponent.lowercased() == "swiftenv.xcconfig"
+        where: { $0.lastComponent.lowercased() == "swiftenv.xcconfig"
         }) {
         // Parse the contents of the swiftenv.xcconfig file. without library
         let config = try parseXCConfigFile(atPath: configFile)
@@ -61,18 +61,18 @@ fileprivate func generateCode(inputFiles: [URL], outputDirectory: URL, executabl
         }
     }
     
-    guard let swiftenvFile = inputFiles.first(where: { $0.lastPathComponent.lowercased() == mapperFileName.lowercased() }) else {
+    guard let swiftenvFile = inputFiles.first(where: { $0.lastComponent.lowercased() == mapperFileName.lowercased() }) else {
         return []
     }
-    let outputFilePath = outputDirectory.appending(path: outputEnumName + ".swift")
+    let outputFilePath = outputDirectory.appending(outputEnumName + ".swift")
     
     // Construct a build command to run the code generator tool.
     return [.buildCommand(
         displayName: "Generating \(outputEnumName)",
         executable: executablePath,
         arguments: [
-            swiftenvFile.absoluteString,
-            outputFilePath.absoluteString,
+            swiftenvFile.string,
+            outputFilePath.string,
             outputEnumName,
             defaultAccessModifier
         ],
@@ -82,9 +82,9 @@ fileprivate func generateCode(inputFiles: [URL], outputDirectory: URL, executabl
     )]
 }
 
-private func parseXCConfigFile(atPath url: URL) throws -> [String: String] {
+private func parseXCConfigFile(atPath url: Path) throws -> [String: String] {
     // Load the content of the file
-    let content = try String(contentsOf: url, encoding: .utf8)
+    let content = try String(contentsOfFile: url.string, encoding: .utf8)
     
     // Create a dictionary to store key-value pairs
     var configDict: [String: String] = [:]

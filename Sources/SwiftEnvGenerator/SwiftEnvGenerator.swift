@@ -18,7 +18,7 @@ struct SwiftEnvGenerator {
         }
         
         // arguments[0] is the path to this command line tool
-        let input = URL(string: CommandLine.arguments[1])!
+        let input = URL(filePath: CommandLine.arguments[1])
         let data = try Data(contentsOf: input)
         try await generate(
             inputData: data,
@@ -34,7 +34,7 @@ struct SwiftEnvGenerator {
         outputEnumName: String,
         defaultAccessLevel: String
     ) async throws {
-        let outputUrl = URL(string: outputPath)!
+        let outputUrl = URL(filePath: outputPath)
         
         // Parse json to dictionary
         let json = try JSONSerialization.jsonObject(with: inputData, options: []) as? [String: Any]

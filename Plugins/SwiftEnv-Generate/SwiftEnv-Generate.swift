@@ -13,12 +13,12 @@ struct SwiftEnvPlugin: CommandPlugin {
     func performCommand(context: PackagePlugin.PluginContext, arguments: [String]) async throws {
         let generatorTool = try context.tool(named: "SwiftEnvGenerator")
         let otherFiles = context.package.targets
-            .compactMap(\.sourceModule)
+            .compactMap { $0 as? SourceModuleTarget }
             .flatMap(\.sourceFiles)
-            .map(\.url)
+            .map(\.path)
         otherFiles.forEach {  print($0) }
         try generateCode(
-            directoryDirectory: context.package.directoryURL,
+            directoryDirectory: context.package.directory,
             allFiles: otherFiles,
             executable: generatorTool
         )
@@ -33,9 +33,9 @@ extension SwiftEnvPlugin: XcodeCommandPlugin {
         let generatorTool = try context.tool(named: "SwiftEnvGenerator")
         let allFiles = context.xcodeProject.targets
             .map(\.inputFiles)
-            .flatMap { $0.map(\.url) }
+            .flatMap { $0.map(\.path) }
         try generateCode(
-            directoryDirectory: context.xcodeProject.directoryURL,
+            directoryDirectory: context.xcodeProject.directory,
             allFiles: allFiles,
             executable: generatorTool
         )
@@ -45,8 +45,8 @@ extension SwiftEnvPlugin: XcodeCommandPlugin {
 #endif
 
 fileprivate func generateCode(
-    directoryDirectory: URL,
-    allFiles: [URL],
+    directoryDirectory: Path,
+    allFiles: [Path],
     executable: PackagePlugin.PluginContext.Tool
 ) throws {
     // Find the swiftenv.json file in the input files.
@@ -57,13 +57,13 @@ fileprivate func generateCode(
     
     let fileManager = FileManager.default
     
-    let configuration = directoryDirectory.appending(path: "swiftenv.xcconfig")
-    var configFile: URL? = nil
-    if fileManager.fileExists(atPath: configuration.path) {
+    let configuration = directoryDirectory.appending("swiftenv.xcconfig")
+    var configFile: Path? = nil
+    if fileManager.fileExists(atPath: configuration.string) {
         configFile = configuration
     } else {
-        for file in allFiles where file.lastPathComponent == "swiftenv.xcconfig" {
-            if fileManager.fileExists(atPath: file.path) {
+        for file in allFiles where file.lastComponent.lowercased() == "swiftenv.xcconfig" {
+            if fileManager.fileExists(atPath: file.string) {
                 configFile = file
                 break
             }
@@ -88,21 +88,21 @@ fileprivate func generateCode(
     }
     
     // Get directory from the url
-    let outputDirectory = configFile?.deletingLastPathComponent() ?? directoryDirectory
-    let swiftenvFile = outputDirectory.appending(path: mapperFileName)
-    guard fileManager.fileExists(atPath: swiftenvFile.path) else {
+    let outputDirectory = configFile?.removingLastComponent() ?? directoryDirectory
+    let swiftenvFile = outputDirectory.appending(mapperFileName)
+    guard fileManager.fileExists(atPath: swiftenvFile.string) else {
         return
     }
     let outputFileURL = outputDirectory
-        .appending(component: outputFilePath)
-        .appending(path: outputEnumName + ".swift")
+        .appending(outputFilePath)
+        .appending(outputEnumName + ".swift")
     
     // Construct a build command to run the code generator tool.
     let task = Process()
-    task.executableURL = executable.url
+    task.executableURL = URL(filePath: executable.path.string)
     task.arguments = [
-        swiftenvFile.absoluteString,
-        outputFileURL.absoluteString,
+        swiftenvFile.string,
+        outputFileURL.string,
         outputEnumName,
         defaultAccessModifier
     ]
@@ -121,9 +121,9 @@ fileprivate func generateCode(
     }
 }
 
-private func parseXCConfigFile(atPath url: URL) throws -> [String: String] {
+private func parseXCConfigFile(atPath url: Path) throws -> [String: String] {
     // Load the content of the file
-    let content = try String(contentsOf: url, encoding: .utf8)
+    let content = try String(contentsOfFile: url.string, encoding: .utf8)
     
     // Create a dictionary to store key-value pairs
     var configDict: [String: String] = [:]
